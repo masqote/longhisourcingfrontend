@@ -73,6 +73,7 @@
                     <button id="add" class="btn btn-info">Add More</button>
                   </div>
                 </div>
+            
                 <div id="add_field">
                   
                 </div>
@@ -89,30 +90,7 @@
   </div>
   
 </template>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.nested/1.01/jquery.nested.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $("#add").click(function () {
-      $("#add_field").append(`
-                <div class="form-row">
-                  <div class="form-group col-md-5">
-                    <label for="inputEmail4">Place to Go</label>
-                    <input type="text" class="form-control" id="inputEmail4" placeholder="Where you go ? Jambi, Riau or ">
-                  </div>
-                  <div class="form-group col-md-5">
-                    <label for="inputPassword4">When ?</label>
-                       <datepicker></datepicker>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="inputPassword4">More Project</label>
-                    <button  id="btnAddtoList" class="btn btn-info">Add More</button>
-                  </div>
-                </div>
-      `);
-    });
-  });
-</script>
+
 <script>
 /* eslint-disable */
 import VueMonthlyPicker from 'vue-monthly-picker';
@@ -144,4 +122,20 @@ import Datepicker from 'vuejs-datepicker';
     },
    
   }
+ $(document).ready(function(){
+    $("#add").click(function () {
+      $("#add_field").append(`
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    <label for="inputEmail4">Place to Go</label>
+                    <input type="text" class="form-control" id="inputEmail4" placeholder="Where you go ? Jambi, Riau or ">
+                  </div>
+                  <div class="form-group col-md-5">
+                    <label for="inputPassword4">When ?</label>
+                       <datepicker></datepicker>
+                  </div>
+                </div>
+      `);
+    }); 
+  });
 </script>

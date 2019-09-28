@@ -57,7 +57,7 @@
             localStorage.setItem('token', token);
             localStorage.setItem('email', email);
            this.$router.push({name: 'posts'});
-        console.log(localStorage);
+            console.log(localStorage);
         });
       }
     }
