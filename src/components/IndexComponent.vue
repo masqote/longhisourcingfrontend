@@ -70,13 +70,13 @@
                           <div class="form-row">
                             <div class="form-group col-md-5">   
                               <label for="inputPlace">Place to Go</label>
-                              <input type="text" class="form-control" id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
+                              <input type="text" class="form-control" v-model="project.schedule_place[0]"  id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
                             </div>
                             <div class="form-group col-md-5">
                               <label for="inputDate">When??</label>
                               <!-- <date-range-picker class="form-control" v-model="range" id="inputDate"/> -->
                               <div >
-                                <input type="text" class="form-control" id="inputDate"  v-model="project.schedule_date_detail" name="datefilter" placeholder="Select Date">
+                                <input type="text" class="form-control" id="inputDate"  v-model="project.schedule_date_detail[0]" name="datefilter" placeholder="Select Date">
                                 </div>
                             </div>
                             <div class="form-group col-md-2">                            
@@ -86,11 +86,12 @@
                               </div>
                             </div>                           
                           </div>
+                          <div id="add_field">
+                         </div>
                         </div>
                       </div>
 
-                <div id="add_field">
-                </div>
+                
               </div>
               
               <div class="modal-footer">
@@ -120,7 +121,10 @@ import VueMonthlyPicker from 'vue-monthly-picker';
         return {
           email: localStorage.getItem('email'),
           posts: [], // ini untuk menampung data semua user yang didapat dari API
-          project:{}, // ini untuk menampung data project
+          project:{
+             schedule_date_detail: [],
+             schedule_place: []
+          }, // ini untuk menampung data project
         }
       },
       created() {
@@ -146,7 +150,7 @@ import VueMonthlyPicker from 'vue-monthly-picker';
           //   localStorage.setItem('token', token);
           //   localStorage.setItem('email', email);
           //  this.$router.push({name: 'posts'});
-            console.log(response);
+            console.log(this.project.schedule_place);
         });
       }
     }
@@ -174,14 +178,17 @@ $(function(){
 
 // Func Add Field Baru
       $('.add').click(function() {
-        $('.form-row:last').after(`<div class="form-row asd">
+        $('#add_field').append(`<div class="form-row">
                             <div class="form-group col-md-5">   
                               <label for="inputPlace">Place to Go</label>
-                              <input type="text" class="form-control" id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
+                              <input type="text" class="form-control" v-model="project.schedule_place[1]"  id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
                             </div>
                             <div class="form-group col-md-5">
-                                <label for="inputDate">When??</label>
-                                <input type="text" class="form-control" v-model="project.schedule_date_detail" id="inputDate" name="datefilter" placeholder="Select Date" >                            
+                              <label for="inputDate">When??</label>
+                              <!-- <date-range-picker class="form-control" v-model="range" id="inputDate"/> -->
+                              <div >
+                                <input type="text" class="form-control" id="inputDate"  v-model="project.schedule_date_detail[1]" name="datefilter" placeholder="Select Date">
+                                </div>
                             </div>
                             <div class="form-group col-md-2">
                                 <label for="inputOpsi">Option</label>
@@ -206,7 +213,7 @@ $(function(){
       });
 
 // Func Remove Field Tambahan
-      $('#ValuWrapper').on('click','.del',function() {
+      $('#add_field').on('click','.del',function() {
          $(this).fadeOut("1000", function(){
         $(this).parent().parent().parent().remove();
       });     
