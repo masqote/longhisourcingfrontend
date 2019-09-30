@@ -53,11 +53,13 @@
          
            this.axios.post(uri, this.login).then((response) => {
             var token = response.data.token; // get token untuk nanti di store kedalam localStorage
+            var name = response.data.user.name
             var email = this.login.email;
             localStorage.setItem('token', token);
             localStorage.setItem('email', email);
+            localStorage.setItem('name', name);
             window.location.href = '/posts'
-            console.log(localStorage);
+            console.log(name);
         });
       }
     }
