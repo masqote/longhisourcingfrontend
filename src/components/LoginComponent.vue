@@ -56,7 +56,7 @@
             var email = this.login.email;
             localStorage.setItem('token', token);
             localStorage.setItem('email', email);
-           this.$router.push({name: 'posts'});
+            window.location.href = '/posts'
             console.log(localStorage);
         });
       }

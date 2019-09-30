@@ -18,16 +18,18 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Item Names</th>
-                <th>Item Prices </th>
+                <th>Name Project</th>
+                <th>Month</th>
+                <th>Responsible</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
                 <tr v-for="post in posts" :key="post.id">
-                    <td>{{ post.name }}</td>
-                    <td>{{ post.email }}</td>
-                    <td>{{ post.password }}</td>
+                    <td>{{ post.id }}</td>
+                    <td>{{ post.name_of_project }}</td>
+                    <td>{{ post.schedule_month }}</td>
+                    <td>{{ post.schedule_email }}</td>
                     <td><router-link :to="{name: 'edit', params: { id: post.id }}" class="btn btn-primary">Edit</router-link></td>
                     <td><button class="btn btn-danger" @click.prevent="deletePost(post.id)">Delete</button></td>
                 </tr>
@@ -122,7 +124,7 @@ import VueMonthlyPicker from 'vue-monthly-picker';
         }
       },
       created() {
-      let uri = `http://192.168.10.60:8000/api/alluser`;
+      let uri = `http://192.168.10.60:8000/api/schedules`;
       this.axios.get(uri, 
       {
         headers: {
@@ -130,7 +132,7 @@ import VueMonthlyPicker from 'vue-monthly-picker';
           'Authorization': 'bearer ' + localStorage.getItem('token')
         }
       }).then(response => {
-        this.posts = response.data.user.data
+        this.posts = response.data.data
         console.log(this.posts)
       })
     },
@@ -138,7 +140,7 @@ import VueMonthlyPicker from 'vue-monthly-picker';
       addProject(){
          let uri = 'http://192.168.10.60:8000/api/schedule';
          
-           this.axios.post(uri, this.project, this.asd).then((response) => {
+           this.axios.post(uri, this.project).then((response) => {
           //   // var token = response.data.token; // get token untuk nanti di store kedalam localStorage
           //   // var email = this.login.email;
           //   localStorage.setItem('token', token);

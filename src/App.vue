@@ -7,7 +7,7 @@
           <router-link to="/" class="nav-link">Home</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/create" class="nav-link">Create Post</router-link>
+          <router-link to="/create" class="nav-link">Create</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/posts" class="nav-link">Posts</router-link>
@@ -26,10 +26,30 @@
 </template>
 
 <script>
-
-export default {
-
-}
+  export default {
+      data() {
+        return {
+          name:null,
+          email:null
+        }
+      },
+      created() {
+      let uri = `http://192.168.10.60:8000/api/user`;
+      this.axios.get(uri, 
+      {
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'bearer ' + localStorage.getItem('token')
+        }
+      }).then(response => {
+        this.name = response.data.user
+        this.name = this.name.name
+        this.email = response.data.user
+        this.email = this.email.email
+        // console.log(this.email)
+      })
+    },  
+  }
 </script>
 
 <style>
