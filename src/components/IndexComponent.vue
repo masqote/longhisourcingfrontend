@@ -37,6 +37,7 @@
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
+            <form @submit.prevent="addProject">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -44,18 +45,21 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+              
               <div class="modal-body">
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="inputEmail4">Name of Project</label>
-                    <input type="text" class="form-control" id="inputEmail4" v-model="project.schedule" placeholder="Name of Project">
+                    <input type="text" class="form-control" id="inputEmail4" v-model="project.name_of_project" placeholder="Name of Project">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword41">Periode</label>
                         <vue-monthly-picker
-                      v-model="project.schedule" id="inputPassword41">
+                      v-model="project.schedule_month" id="inputPassword41">
                     </vue-monthly-picker>
                   </div>
+                  <!-- untuk mendapatkan data email didalam localStorage -->
+                    <input v-model="project.schedule_email = email" type="hidden" class="form-control"> 
                 </div>
                 <hr/>
                 
@@ -69,12 +73,14 @@
                             <div class="form-group col-md-5">
                               <label for="inputDate">When??</label>
                               <!-- <date-range-picker class="form-control" v-model="range" id="inputDate"/> -->
-                                <input type="text" class="form-control" id="inputDate" name="datefilter" placeholder="Select Date" value="">
+                              <div >
+                                <input type="text" class="form-control" id="inputDate"  v-model="project.schedule_date_detail" name="datefilter" placeholder="Select Date">
+                                </div>
                             </div>
                             <div class="form-group col-md-2">                            
                               <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-success add">Add More</button>
-                                
+                                <!-- <label for="inputOpsi">Option</label> -->
+                                <button type="button" class="btn btn-success add"  style="margin-top:35px;">Add More</button>
                               </div>
                             </div>                           
                           </div>
@@ -83,13 +89,14 @@
 
                 <div id="add_field">
                 </div>
-                
               </div>
+              
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save Project</button>
+                <button type="submit" class="btn btn-primary">Save Project</button>
               </div>
             </div>
+            </form>
           </div>
         </div>
         
@@ -109,8 +116,9 @@ import VueMonthlyPicker from 'vue-monthly-picker';
       },
       data() {
         return {
+          email: localStorage.getItem('email'),
           posts: [], // ini untuk menampung data semua user yang didapat dari API
-          project:{} // ini untuk menampung data project
+          project:{}, // ini untuk menampung data project
         }
       },
       created() {
@@ -126,6 +134,20 @@ import VueMonthlyPicker from 'vue-monthly-picker';
         console.log(this.posts)
       })
     },
+    methods: {
+      addProject(){
+         let uri = 'http://192.168.10.60:8000/api/schedule';
+         
+           this.axios.post(uri, this.project, this.asd).then((response) => {
+          //   // var token = response.data.token; // get token untuk nanti di store kedalam localStorage
+          //   // var email = this.login.email;
+          //   localStorage.setItem('token', token);
+          //   localStorage.setItem('email', email);
+          //  this.$router.push({name: 'posts'});
+            console.log(response);
+        });
+      }
+    }
   }
 
 // Put Here For JS tambahan
@@ -157,7 +179,8 @@ $(function(){
                             </div>
                             <div class="form-group col-md-5">
                                 <label for="inputDate">When??</label>
-                                <input type="text" class="form-control" id="inputDate" name="datefilter" placeholder="Select Date" value="">                            </div>
+                                <input type="text" class="form-control" v-model="project.schedule_date_detail" id="inputDate" name="datefilter" placeholder="Select Date" >                            
+                            </div>
                             <div class="form-group col-md-2">
                                 <label for="inputOpsi">Option</label>
                                 <div class="btn-group btn-group-sm" id="inputOpsi" role="group" aria-label="Basic example">  
