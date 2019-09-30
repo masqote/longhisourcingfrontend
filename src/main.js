@@ -3,7 +3,15 @@ import Vue from 'vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import VueRouter from 'vue-router'
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+
+// import the plugin
+import DateRangePicker from "@gravitano/vue-date-range-picker"
+ 
+Vue.config.productionTip = false;
+ 
+// use the plugin
+Vue.use(DateRangePicker);
 
 import VueAxios from 'vue-axios'
 import axios from 'axios'

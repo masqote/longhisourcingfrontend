@@ -51,31 +51,37 @@
                     <input type="text" class="form-control" id="inputEmail4" v-model="project.schedule" placeholder="Name of Project">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4">Periode</label>
+                    <label for="inputPassword41">Periode</label>
                         <vue-monthly-picker
-                      v-model="project.schedule">
+                      v-model="project.schedule" id="inputPassword41">
                     </vue-monthly-picker>
                   </div>
                 </div>
                 <hr/>
+                
+                <div id="content">
+                        <div id="ValuWrapper"> 
+                          <div class="form-row">
+                            <div class="form-group col-md-5">   
+                              <label for="inputPlace">Place to Go</label>
+                              <input type="text" class="form-control" id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
+                            </div>
+                            <div class="form-group col-md-5">
+                              <label for="inputDate">When??</label>
+                              <!-- <date-range-picker class="form-control" v-model="range" id="inputDate"/> -->
+                                <input type="text" class="form-control" id="inputDate" name="datefilter" placeholder="Select Date" value="">
+                            </div>
+                            <div class="form-group col-md-2">                            
+                              <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-success add">Add More</button>
+                                
+                              </div>
+                            </div>                           
+                          </div>
+                        </div>
+                      </div>
 
-                <div class="form-row">
-                  <div class="form-group col-md-5">
-                    <label for="inputEmail4">Place to Go</label>
-                    <input type="text" class="form-control" id="inputEmail4" placeholder="Where you go ? Jambi, Riau or ">
-                  </div>
-                  <div class="form-group col-md-5">
-                    <label for="inputPassword4">When ?</label>
-                       <datepicker></datepicker>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="inputPassword4">More Project</label>
-                    <button id="add" class="btn btn-info">Add More</button>
-                  </div>
-                </div>
-            
                 <div id="add_field">
-                  
                 </div>
                 
               </div>
@@ -94,12 +100,12 @@
 <script>
 /* eslint-disable */
 import VueMonthlyPicker from 'vue-monthly-picker';
-import Datepicker from 'vuejs-datepicker';
+// import Datepicker from 'vuejs-datepicker';
 // import DatePicker from 'vue2-datepicker';
   export default {
       components: {
         VueMonthlyPicker,
-        Datepicker
+        // Datepicker
       },
       data() {
         return {
@@ -120,22 +126,65 @@ import Datepicker from 'vuejs-datepicker';
         console.log(this.posts)
       })
     },
-   
   }
- $(document).ready(function(){
-    $("#add").click(function () {
-      $("#add_field").append(`
-                <div class="form-row">
-                  <div class="form-group col-md-5">
-                    <label for="inputEmail4">Place to Go</label>
-                    <input type="text" class="form-control" id="inputEmail4" placeholder="Where you go ? Jambi, Riau or ">
-                  </div>
-                  <div class="form-group col-md-5">
-                    <label for="inputPassword4">When ?</label>
-                       <datepicker></datepicker>
-                  </div>
-                </div>
-      `);
-    }); 
-  });
+
+// Put Here For JS tambahan
+$(function(){
+
+//  Func JQuery daterangepicker.com
+     $('input[name="datefilter"]').daterangepicker({
+      autoUpdateInput: false,
+      locale: {
+          cancelLabel: 'Clear'
+      }
+    });
+
+    $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    });
+
+    $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+    });
+    
+
+// Func Add Field Baru
+      $('.add').click(function() {
+        $('.form-row:last').after(`<div class="form-row asd">
+                            <div class="form-group col-md-5">   
+                              <label for="inputPlace">Place to Go</label>
+                              <input type="text" class="form-control" id="inputPlace" placeholder="Where you go ? Jambi, Riau or ">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputDate">When??</label>
+                                <input type="text" class="form-control" id="inputDate" name="datefilter" placeholder="Select Date" value="">                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="inputOpsi">Option</label>
+                                <div class="btn-group btn-group-sm" id="inputOpsi" role="group" aria-label="Basic example">  
+                                  <button type="button" class="btn btn-danger del">Remove</button>
+                                </div>
+                            </div>                           
+                         </div>`)
+      $('input[name="datefilter"]').daterangepicker({
+          autoUpdateInput: false,
+          locale: {
+              cancelLabel: 'Clear'
+          }
+        });
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+      });
+
+// Func Remove Field Tambahan
+      $('#ValuWrapper').on('click','.del',function() {
+         $(this).fadeOut("1000", function(){
+        $(this).parent().parent().parent().remove();
+      });     
+    });
+});
 </script>
